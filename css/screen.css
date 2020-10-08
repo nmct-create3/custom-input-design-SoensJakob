@@ -39,6 +39,10 @@
     --global-color-neutral-xxx-dark: #35374d;
     --global-color-neutral-xxxx-dark: #20223a;
 
+    /* page color */
+    --global-page-color: var(--global-color-neutral-xxxx-dark);
+    --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+
     /* border stuff */
     --global-borderRadius: 3px;
     --global-borderWidth: 1px;
@@ -56,7 +60,52 @@
     --global-whitespace-lg: calc(var(--global-baseline) * 4); /*  = 32px */
     --global-whitespace-xl: calc(var(--global-whitespace) * 2); /*  = 48px */
     --global-whitespace-xxl: calc(var(--global-whitespace) * 3); /*  = 72px */
+
+    --global-input-backgroundColor: White;
+    --global-input-color: var(--global-color-neutral-xxxx-dark);
+    --global-input-borderColor: var(--global-color-neutral-xxx-light);
+    --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
+    --global-input-focus-borderColor: var(--global-color-alpha);
+    --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+    
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --global-page-color: White;
+        --global-page-backgroundColor: var(--global-color-neutral-xxxx-dark);
+
+    }
+    
+    html {
+        background-color: var(--global-page-backgroundColor);
+    }
+
+    .c-logo {
+        --logo__path--1--fill: White;
+        --logo__path--2--fill: var(--logo__path--1--fill);
+        --logo__path--3--fill: var(--logo__path--1--fill);
+    }
+    .c-card {
+        --card__background-color: #35374D;
+    }    
+    .c-label {
+        --label__color: var(--global-color-neutral-x-light);
+    }
+    .c-input {
+        --input__background-color:var(--global-color-neutral-xxxx-dark);
+        --input__background-color--active:var(--global-color-alpha-transparent);
+        --input__border-color:var(--global-color-neutral-xxxx-dark);
+        --input__box-shadow: 0 0 0 3px var(--global-color-alpha-transparent);
+    }
+    .c-custom-option {
+        --custom-option__border-color:var(--global-color-neutral-xxxx-dark);
+        --custom-option__fill:var(--global-color-neutral-xxxx-light);
+        --custom-option__background-color:var(--global-color-neutral-xxxx-dark);
+        --custom-option__border-color--hover:var(--global-color-neutral-xxxx-dark);
+    }
+}
+
 
 /*------------------------------------*\
 #GENERIC
@@ -72,12 +121,13 @@ html {
     font-size: 16px;
     line-height: 1.5;
     font-family: "Inter Web", Helvetica, arial, sans-serif;
-    color: var(--global-color-neutral-xxxx-dark);
-    background-color: var(--global-color-neutral-xxxx-light);
+    color: var(--global-page-color);
+    background-color: var(--global-page-backgroundColor);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;    
 }
+
 
 *,
 *:before,
@@ -514,17 +564,16 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-    fill: var(--global-color-neutral-xxxx-dark);
-}
-
-.c-logo__path--2 {
-    fill: var(--global-color-alpha);
-}
-
-.c-logo__path--3 {
-    fill: var(--color-alpha-x-dark);
-}
-
+    fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
+  }
+  
+  .c-logo__path--2 {
+    fill: var(--logo__path--2--fill, var(--global-color-alpha));
+  }
+  
+  .c-logo__path--3 {
+    fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
+  }
 /*
     Component: Card
     ---
@@ -532,7 +581,7 @@ input::placeholder {
 */
 
 .c-card {
-    background-color: White;
+    background-color: var(--card__background-color, white);
     margin-bottom: var(--global-whitespace);
     border-radius: var(--global-borderRadius);
     box-shadow: 0 0 0 var(--global-borderWidth) rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
@@ -588,6 +637,7 @@ input::placeholder {
     display: flex;
     -ms-align-items: center;
     align-items: center;
+    margin:4px 0;
 }
 
 /*
@@ -601,10 +651,10 @@ input::placeholder {
     -moz-appearance: none;
     appearance: none;
     width: 100%;
-    border: var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
     border-radius: var(--global-borderRadius);
-    color: var(--global-color-neutral-xxxx-dark);
-    background-color: White;
+    border: var(--global-borderWidth) solid var(--input__border-color, var(--global-input-borderColor));
+    background-color: var(--input__background-color, var(--global-input-backgroundColor));
+    color: var(--global-input-color);
     font-family: inherit;
     font-size: 16px;
     line-height: calc(var(--global-baseline) * 3);
@@ -614,13 +664,14 @@ input::placeholder {
 }
 
 .c-input:hover {
-    border-color: var(--global-color-neutral-xx-light);
+    border-color: var(--input__border-color, var(--global-input-hover-borderColor));
 }
 
 .c-input:focus,
 .c-input:active {
-    border-color: var(--global-color-alpha);
-    box-shadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+    border-width:  var(--global-borderWidth);
+    border-color: var(--input__background-color--active, var(--global-input-focus-borderColor));
+    box-shadow: var(--input__box-shadow, var(--global-input-boxShadow));
 }
 
 /* option input for checkboxes and radio buttons */
@@ -629,6 +680,99 @@ input::placeholder {
     margin-right: var(--global-whitespace-sm);
 }
 
+.c-option-list {
+    margin-bottom: 24px;
+}
+
+.c-option-list__item {
+    margin-bottom: 12px;
+}
+/*
+    Component: Custom Option
+    ---
+    Custom checkboxes
+*/
+.c-custom-option {
+    --custom-option-borderColor: var(--custom-option__border-color, var(--global-input-borderColor));
+    --custom-option-focus-borderColor: var(--custom-option__border-color, var(--global-input-focus-borderColor));
+    --custom-option-hover-borderColor: var(--custom-option__border-color--hover, var(--global-input-hover-borderColor));
+    
+    display: flex;
+
+    
+}
+
+.c-custom-option:hover {
+    --custom-option-borderColor: var(--input__border-color, var(--custom-option-hover-borderColor));
+}
+
+.c-custom-option__symbol {
+    opacity: 0;
+    display: block;
+    transition: var(--global-transitionTiming-alpha);
+    
+}
+
+
+.c-custom-option__fake-input {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--custom-option-borderColor);
+    /* border: 1px solid #81ADF0; */
+    margin-right: 8px;
+    justify-content: center;
+    align-items: center;
+    background-color:var(--custom-option__background-color, white);
+}
+
+
+.c-custom-option__fake-input:hover {
+    border-color: var(--global-color-alpha-dark);
+    
+}
+
+.c-custom-option__fake-input:focus,
+.c-custom-option__fake-input:active {
+    box-shadow: var(--global-input-boxShadow);
+    
+}
+
+.c-custom-option__fake-input--checkbox  {
+    border-radius: var(--global-borderRadius);
+
+}
+
+.c-custom-option__fake-input--radio { 
+    border-radius: 100%;
+}
+
+.c-custom-option__fake-input--checkbox .c-custom-option__symbol {
+    width: 10px;
+    height: 10px;
+    fill: var(--custom-option__fill, var(--global-color-alpha));
+    
+}
+  
+.c-custom-option__fake-input--radio .c-custom-option__symbol {
+    width: 6px;
+    height: 6px;
+    background-color: var(--global-color-alpha);
+    border-radius:100%;
+}
+
+/* .c-option--hidden:checked + .c-custom-option {
+    
+    background-color: red;
+ 
+}
+*/
+.c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
+   opacity: 1;
+
+}
+
+
 /*
     Component: Label
     ---
@@ -636,11 +780,13 @@ input::placeholder {
 */
 
 .c-label {
+    display: flex;
+    align-items: center;
     margin-bottom: 0;
     font-size: 14px;
     padding-bottom: var(--global-whitespace-xs);    
     line-height: calc(var(--global-baseline) * 2);
-    color: var(--global-color-neutral-xx-dark);
+    color: var(--label__color, var(--global-color-neutral-xx-dark));
 }
 
 .c-label--option {
@@ -665,6 +811,7 @@ input::placeholder {
     width: 100%;
     outline: none;
     transition: all var(--global-transition-timing-alpha);
+    margin-top: 16px;
 }
 
 .c-button:hover {
@@ -679,6 +826,106 @@ input::placeholder {
     background-color: var(--global-color-alpha-dark);
     box-shadow: none;
 }
+
+/*
+    Component: toggle
+    ---
+    Class to change checkboxes and radio buttons into toggle buttons
+*/
+.c-custom-toggle__fake-input {
+    display: block;
+    width: 48px;
+    height: 23px;
+    border-radius: 24px;
+    border:var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
+    margin-right: 16px;
+    background-color: var(--global-color-neutral-xxxx-light);
+    transition: all var(--global-transitionTiming-alpha);
+    
+}
+
+.c-custom-toggle__fake-input::after {
+    content:"";
+    display: block;
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    transition: all var(--global-transitionTiming-alpha);
+    box-shadow: 0 1px 3px #00000027;
+    background-color: var(--global-input-backgroundColor);
+    
+}
+
+ .c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input {
+    background-color: var(--global-color-alpha);
+    border-color: var(--global-color-alpha-dark);
+
+ }
+
+.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    transform: translateX(24.5px); 
+ }
+
+.c-custom-toggle__fake-input:focus,
+.c-custom-toggle__fake-input:active {
+    box-shadow: var(--global-input-boxShadow);
+}
+
+.c-option--hidden:active:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    transform:translateX(19px);
+}
+
+.c-option--hidden:active + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    width: 28px;
+    border-radius:28px;
+}
+
+.c-toggle-list__item {
+    margin-bottom: 12px;
+}
+
+.c-toggle-list__item + .c-toggle-list__item {
+    border-top: 1px solid var(--global-input-borderColor);
+    padding-top:12px;
+}
+
+.c-custom-toggle--inverted {
+    display: flex;
+    width:100%;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+}
+
+.c-custom-toggle--inverted .c-custom-toggle__fake-input {
+    margin-right: 0;
+}
+
+
+/*
+    Component: "custom select"
+    ---
+    Class for custom select input
+*/
+
+.c-custom-select {
+    display: block;
+    position: relative;
+}
+
+.c-custom-select__symbol {
+    position: absolute;
+    right:12px;
+    top:12px;
+    width: 24px;
+    height: 24px;
+    fill:var(--global-color-neutral-x-light);
+    pointer-events: none;
+}
+
+
+
+
 
 /*------------------------------------*\
 #UTILITIES
