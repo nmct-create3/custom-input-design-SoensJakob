@@ -93,6 +93,7 @@
         --label__color: var(--global-color-neutral-x-light);
     }
     .c-input {
+        --input__color: var(--global-color-neutral-xxxx-light);
         --input__background-color:var(--global-color-neutral-xxxx-dark);
         --input__background-color--active:var(--global-color-alpha-transparent);
         --input__border-color:var(--global-color-neutral-xxxx-dark);
@@ -102,7 +103,7 @@
         --custom-option__border-color:var(--global-color-neutral-xxxx-dark);
         --custom-option__fill:var(--global-color-neutral-xxxx-light);
         --custom-option__background-color:var(--global-color-neutral-xxxx-dark);
-        --custom-option__border-color--hover:var(--global-color-neutral-xxxx-dark);
+        --custom-option__border-color--hover:var(--global-color-neutral-xx-dark);
     }
 }
 
@@ -654,7 +655,7 @@ input::placeholder {
     border-radius: var(--global-borderRadius);
     border: var(--global-borderWidth) solid var(--input__border-color, var(--global-input-borderColor));
     background-color: var(--input__background-color, var(--global-input-backgroundColor));
-    color: var(--global-input-color);
+    color: var(--input__color, --global-input-color);
     font-family: inherit;
     font-size: 16px;
     line-height: calc(var(--global-baseline) * 3);
